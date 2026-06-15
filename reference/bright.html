@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Festival Mariana Bracetti</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bitter:ital,wght@0,400;0,600;1,500&family=Archivo:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#29ABE2;
+    --red:#ED1C24;
+    --cream:#F7F4ED;
+    --ink:#1A1A1A;
+    --blue-tint:#BFE4F7;
+    --red-tint:#F9C4C6;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Archivo',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ===== Halftone dot texture ===== */
+  .dots{position:relative; overflow:hidden;}
+  .dots::after{
+    content:'';
+    position:absolute; inset:0;
+    background-image:radial-gradient(circle, var(--ink) 1.4px, transparent 1.4px);
+    background-size:11px 11px;
+    opacity:.14;
+    mix-blend-mode:multiply;
+    pointer-events:none;
+  }
+  .dots-cream::after{
+    background-image:radial-gradient(circle, var(--blue) 1.4px, transparent 1.4px);
+    opacity:.18;
+    mix-blend-mode:normal;
+  }
+  .dots-red::after{
+    background-image:radial-gradient(circle, var(--cream) 1.6px, transparent 1.6px);
+    opacity:.35;
+    mix-blend-mode:normal;
+  }
+
+  /* ===== Header ===== */
+  header{
+    border-bottom:3px solid var(--ink);
+    background:var(--cream);
+    position:sticky; top:0; z-index:50;
+  }
+  .header-inner{
+    max-width:1180px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px;
+  }
+  .wordmark{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Anton',sans-serif;
+    letter-spacing:.04em;
+    font-size:16px;
+    text-transform:uppercase;
+  }
+  .wordmark .divider{width:3px;height:18px;background:var(--red);display:inline-block;}
+  nav{display:flex; gap:24px; font-weight:700; font-size:13px; letter-spacing:.06em; text-transform:uppercase;}
+  nav a{color:var(--ink); text-decoration:none; border-bottom:2px solid transparent; padding-bottom:4px; transition:border-color .15s;}
+  nav a:hover, nav a:focus-visible{border-color:var(--red);}
+
+  /* ===== Hero ===== */
+  .hero{
+    position:relative;
+    background:var(--blue);
+    border-bottom:4px solid var(--ink);
+    overflow:hidden;
+  }
+  .hero-inner{
+    max-width:1180px; margin:0 auto;
+    padding:64px 24px 96px;
+    position:relative; z-index:2;
+  }
+  .eyebrow{
+    display:inline-block;
+    font-weight:900; font-size:13px; letter-spacing:.18em; text-transform:uppercase;
+    background:var(--ink); color:var(--cream);
+    padding:6px 14px;
+    transform:rotate(-2deg);
+    margin-bottom:28px;
+  }
+  .hero h1{
+    font-family:'Anton',sans-serif;
+    text-transform:uppercase;
+    font-size:clamp(58px, 12vw, 132px);
+    line-height:.92;
+    letter-spacing:.01em;
+    color:var(--cream);
+  }
+  .hero h1 .accent{
+    position:relative;
+    color:var(--cream);
+    -webkit-text-stroke:0;
+  }
+  .hero h1 .accent::after{
+    content:attr(data-text);
+    position:absolute;
+    left:8px; top:8px;
+    color:var(--red);
+    z-index:-1;
+  }
+  .hero .festival-script{
+    font-family:'Bitter',serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(28px,5vw,44px);
+    color:var(--ink);
+    display:block;
+    margin-bottom:4px;
+  }
+  .hero-meta{
+    margin-top:32px;
+    display:flex; flex-wrap:wrap; gap:22px; align-items:center;
+  }
+  .seal{
+    position:relative;
+    display:inline-flex; align-items:center; justify-content:center;
+    width:112px; height:112px;
+    border-radius:50%;
+    text-align:center;
+    font-family:'Anton',sans-serif;
+    text-transform:uppercase; letter-spacing:.08em;
+    font-size:10px; line-height:1.28;
+    color:var(--ink);
+    background:var(--cream);
+    transform:rotate(-9deg);
+    padding:10px;
+    border:2px solid var(--ink);
+    box-shadow:
+      0 0 0 4px var(--cream),
+      3px 5px 0 var(--ink),
+      7px 12px 18px rgba(26,26,26,.22);
+    isolation:isolate;
+  }
+  .seal::before{
+    content:'';
+    position:absolute; inset:7px;
+    border:1.5px dashed rgba(26,26,26,.45);
+    border-radius:50%;
+    pointer-events:none;
+  }
+  .seal::after{
+    content:'';
+    position:absolute; inset:0;
+    border-radius:50%;
+    background-image:radial-gradient(circle, var(--ink) 1px, transparent 1px);
+    background-size:5px 5px;
+    opacity:.07;
+    mix-blend-mode:multiply;
+    pointer-events:none;
+  }
+  .seal > span{position:relative; z-index:1;}
+  .seal.red{
+    color:var(--red);
+    border-color:var(--red);
+    transform:rotate(8deg);
+    box-shadow:
+      0 0 0 4px var(--cream),
+      3px 5px 0 var(--red),
+      7px 12px 18px rgba(237,28,36,.18);
+  }
+  .seal.red::before{
+    border-color:rgba(237,28,36,.55);
+    border-style:solid;
+  }
+  .seal.red span{
+    display:block;
+    opacity:.88;
+    text-shadow:0 0 0 var(--red);
+  }
+
+  /* halftone star */
+  .star-burst{
+    position:absolute;
+    right:-60px; top:-40px;
+    width:420px; height:420px;
+    opacity:.9;
+    z-index:1;
+    pointer-events:none;
+  }
+  .star-burst svg{width:100%; height:100%;}
+
+  /* ===== Intro ===== */
+  .intro{
+    max-width:760px; margin:0 auto;
+    padding:72px 24px;
+    text-align:center;
+  }
+  .intro .kicker{
+    font-family:'Anton',sans-serif;
+    text-transform:uppercase;
+    font-size:13px; letter-spacing:.22em;
+    color:var(--red);
+    margin-bottom:18px;
+  }
+  .intro p{
+    font-family:'Bitter',serif;
+    font-size:clamp(19px,2.4vw,24px);
+    line-height:1.65;
+  }
+  .intro p strong{font-weight:700;}
+
+  /* ===== Programa ===== */
+  .programa{
+    max-width:1180px; margin:0 auto;
+    padding:24px 24px 88px;
+  }
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    gap:16px;
+    border-bottom:3px solid var(--ink);
+    padding-bottom:14px;
+    margin-bottom:36px;
+    flex-wrap:wrap;
+  }
+  .section-head h2{
+    font-family:'Anton',sans-serif;
+    text-transform:uppercase;
+    font-size:clamp(34px,5vw,56px);
+    letter-spacing:.01em;
+  }
+  .section-head .date{
+    font-weight:700; font-size:14px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink);
+    white-space:nowrap;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:28px;
+  }
+  .panel{
+    border:3px solid var(--ink);
+    background:var(--cream);
+    padding:28px;
+    position:relative;
+    box-shadow:8px 8px 0 var(--ink);
+    transition:transform .15s, box-shadow .15s;
+  }
+  .panel:hover{transform:translate(-4px,-4px); box-shadow:12px 12px 0 var(--ink);}
+  .panel.blue{background:var(--blue-tint);}
+  .panel.red{background:var(--red-tint);}
+  .panel .tag{
+    display:inline-block;
+    font-weight:900; font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    background:var(--ink); color:var(--cream);
+    padding:5px 10px;
+    margin-bottom:16px;
+  }
+  .panel h3{
+    font-family:'Anton',sans-serif;
+    text-transform:uppercase;
+    font-size:clamp(24px,3vw,32px);
+    line-height:1.1;
+    margin-bottom:12px;
+  }
+  .panel p{font-size:15px; color:#3a3a3a;}
+
+  /* ===== Auspiciadores ===== */
+  .auspiciadores{
+    max-width:1180px; margin:0 auto;
+    padding:0 24px 88px;
+  }
+  .sponsor-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:16px;
+    align-items:stretch;
+  }
+  @media (min-width:640px){
+    .sponsor-grid{grid-template-columns:repeat(2,1fr); gap:20px;}
+  }
+  @media (min-width:1024px){
+    .sponsor-grid{grid-template-columns:repeat(3,1fr); gap:24px;}
+  }
+  .sponsor-grid a{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:3px solid var(--ink);
+    background:var(--cream);
+    padding:28px 24px;
+    min-height:112px;
+    box-shadow:6px 6px 0 var(--ink);
+    transition:transform .15s, box-shadow .15s;
+  }
+  .sponsor-grid a:hover,
+  .sponsor-grid a:focus-visible{
+    transform:translate(-3px,-3px);
+    box-shadow:9px 9px 0 var(--ink);
+  }
+  .sponsor-grid img{
+    max-width:140px;
+    max-height:52px;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    filter:grayscale(100%);
+    opacity:.82;
+    transition:filter .15s, opacity .15s;
+  }
+  .sponsor-grid a:hover img,
+  .sponsor-grid a:focus-visible img{
+    filter:none;
+    opacity:1;
+  }
+
+  /* ===== FAQ Accordion ===== */
+  .faq{
+    max-width:840px; margin:0 auto;
+    padding:24px 24px 48px;
+  }
+  .faq-list{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .faq-item{
+    border:3px solid var(--ink);
+    background:var(--cream);
+    box-shadow:6px 6px 0 var(--ink);
+    transition:transform .15s, box-shadow .15s;
+  }
+  .faq-item:nth-child(even){background:var(--blue-tint);}
+  .faq-item:hover{transform:translate(-3px,-3px); box-shadow:9px 9px 0 var(--ink);}
+  .faq-q{
+    width:100%;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:18px;
+    padding:20px 24px;
+    background:none; border:none;
+    font-family:'Anton',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.01em;
+    font-size:clamp(15px,2.4vw,21px);
+    text-align:left;
+    color:var(--ink);
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .faq-q:focus-visible{outline:3px solid var(--red); outline-offset:-3px;}
+  .faq-icon{
+    flex-shrink:0;
+    width:34px; height:34px;
+    border:3px solid var(--ink);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+    background:var(--red);
+    transition:transform .25s ease, background .25s ease;
+  }
+  .faq-icon::before, .faq-icon::after{
+    content:'';
+    position:absolute;
+    background:var(--cream);
+  }
+  .faq-icon::before{width:14px; height:3px;}
+  .faq-icon::after{width:3px; height:14px;}
+  .faq-item.open .faq-icon{transform:rotate(45deg); background:var(--blue);}
+
+  .faq-a{
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows .3s ease;
+  }
+  .faq-item.open .faq-a{grid-template-rows:1fr;}
+  .faq-a-inner{overflow:hidden; min-height:0;}
+  .faq-a-inner p{
+    font-family:'Bitter',serif;
+    font-size:16px;
+    color:#3a3a3a;
+    border-top:2px dashed var(--ink);
+    margin:0 24px;
+    padding:18px 0 22px;
+  }
+
+  /* ===== Apoya / CTA ===== */
+  .apoya{
+    position:relative;
+    background:var(--red);
+    border-top:4px solid var(--ink);
+    border-bottom:4px solid var(--ink);
+    text-align:center;
+    padding:84px 24px;
+    overflow:hidden;
+  }
+  .apoya-inner{position:relative; z-index:2; max-width:680px; margin:0 auto;}
+  .apoya .festival-script{
+    font-family:'Bitter',serif; font-style:italic; font-weight:500;
+    font-size:clamp(22px,4vw,30px);
+    color:var(--cream);
+    display:block; margin-bottom:6px;
+  }
+  .apoya h2{
+    font-family:'Anton',sans-serif;
+    text-transform:uppercase;
+    font-size:clamp(48px,9vw,96px);
+    color:var(--cream);
+    line-height:.95;
+    margin-bottom:24px;
+  }
+  .apoya p{
+    color:var(--cream);
+    font-size:clamp(16px,2.2vw,19px);
+    margin-bottom:32px;
+  }
+  .btn{
+    display:inline-block;
+    font-family:'Anton',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    font-size:18px;
+    background:var(--cream);
+    color:var(--ink);
+    border:3px solid var(--ink);
+    padding:16px 40px;
+    text-decoration:none;
+    box-shadow:6px 6px 0 var(--ink);
+    transition:transform .15s, box-shadow .15s;
+  }
+  .btn:hover, .btn:focus-visible{
+    transform:translate(-3px,-3px);
+    box-shadow:9px 9px 0 var(--ink);
+  }
+
+  /* ===== Footer ===== */
+  footer{
+    background:var(--cream);
+    padding:40px 24px;
+  }
+  .footer-inner{
+    max-width:1180px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:20px; flex-wrap:wrap;
+    border-top:3px solid var(--ink);
+    padding-top:24px;
+  }
+  .footer-mark{display:flex; align-items:center; gap:10px;}
+  .footer-mark svg{width:28px; height:28px;}
+  footer p{font-size:13px; letter-spacing:.04em; color:#555;}
+  .footer-mark span{
+    font-family:'Anton',sans-serif; text-transform:uppercase; font-size:14px; letter-spacing:.05em;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width:760px){
+    nav{display:none;}
+    .grid{grid-template-columns:1fr;}
+    .star-burst{width:260px; height:260px; right:-90px; top:-30px; opacity:.6;}
+    .hero-inner{padding:48px 20px 72px;}
+  }
+
+  /* ===== Reduced motion ===== */
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="wordmark">
+      Junta comunitaria de Río Piedras <span class="divider"></span> Comunidad Blondet
+    </div>
+    <nav>
+      <a href="#programa">Programa</a>
+      <a href="#faq">Preguntas</a>
+      <a href="#auspiciadores">Auspiciadores</a>
+      <a href="#apoya">Apoya el festival</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero dots">
+  <!-- halftone star, built from radial dot pattern clipped to a star -->
+  <div class="star-burst" aria-hidden="true">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="halftoneStar" width="10" height="10" patternUnits="userSpaceOnUse">
+          <circle cx="5" cy="5" r="2.6" fill="#F7F4ED"/>
+        </pattern>
+        <clipPath id="starClip">
+          <path d="M100 8 L122 72 L190 72 L135 112 L156 178 L100 138 L44 178 L65 112 L10 72 L78 72 Z"/>
+        </clipPath>
+      </defs>
+      <g clip-path="url(#starClip)">
+        <rect width="200" height="200" fill="url(#halftoneStar)"/>
+      </g>
+      <path d="M100 8 L122 72 L190 72 L135 112 L156 178 L100 138 L44 178 L65 112 L10 72 L78 72 Z"
+            fill="none" stroke="#F7F4ED" stroke-width="2" opacity="0.5"/>
+    </svg>
+  </div>
+
+  <div class="hero-inner">
+    <span class="eyebrow">24 de septiembre · Rio Piedras, PR</span>
+    <span class="festival-script">Aprende y celebra en el Festival</span>
+    <h1>
+      Mariana<br>
+      <span class="accent" data-text="Bracetti">Bracetti</span>
+    </h1>
+    <div class="hero-meta">
+      <span class="seal"><span>Entrada<br>libre</span></span>
+      <span class="seal red"><span>Todas<br>las edades</span></span>
+    </div>
+  </div>
+</section>
+
+<section class="intro dots dots-cream">
+  <span class="kicker">La bandera que cosió</span>
+  <p>
+    En 1868, Mariana Bracetti cosió la bandera revolucionaria de Lares: una cruz blanca sobre
+    azul y rojo, con una estrella solitaria. Hoy, ese mismo gesto &mdash; coser comunidad, hilo
+    a hilo &mdash; es lo que el festival celebra. <strong>Un día de talleres, juegos y memoria
+    colectiva</strong>, abierto a todo el barrio.
+  </p>
+</section>
+
+<section class="programa" id="programa">
+  <div class="section-head">
+    <h2>Programa del día</h2>
+    <span class="date">24 de septiembre</span>
+  </div>
+  <div class="grid">
+    <div class="panel blue">
+      <span class="tag">Música</span>
+      <h3>Música en vivo</h3>
+      <p>Artistas locales en escena durante todo el festival.</p>
+    </div>
+    <div class="panel blue">
+      <span class="tag">Comida</span>
+      <h3>Comida</h3>
+      <p>Sabores del barrio y cocina comunitaria para compartir en familia.</p>
+    </div>
+    <div class="panel red">
+      <span class="tag">Artesanías</span>
+      <h3>Artesanías</h3>
+      <p>Trabajo manual y creaciones de artesanes y artesanas del territorio.</p>
+    </div>
+    <div class="panel red">
+      <span class="tag">Diálogo</span>
+      <h3>Discusiones comunitarias</h3>
+      <p>Conversaciones abiertas sobre el barrio, su historia y su futuro.</p>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="section-head">
+    <h2>Preguntas frecuentes</h2>
+    <span class="date">Todo lo que debes saber</span>
+  </div>
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        <span>¿Cuándo y dónde es el festival?</span>
+        <span class="faq-icon" aria-hidden="true"></span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          <p>El Festival Mariana Bracetti se celebra el 24 de septiembre en Río Piedras, Puerto Rico.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        <span>¿Cómo llego al festival?</span>
+        <span class="faq-icon" aria-hidden="true"></span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          <p>El festival tomará lugar en la comunidad Blondet, en las calles Balseiro y Añasco, desde El Refugio hasta Malayo Bar. Recomendamos llegar por el tren urbano en la parada Universidad.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        <span>¿La entrada tiene costo?</span>
+        <span class="faq-icon" aria-hidden="true"></span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          <p>No, la entrada es completamente libre y todas las actividades están abiertas para todas las edades. Habrá vendedores de comida y artistas vendiendo sus creaciones, así que te recomendamos traer efectivo para apoyarlos.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        <span>¿Qué actividades habrá?</span>
+        <span class="faq-icon" aria-hidden="true"></span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          <p>Habrá música en vivo, comida, artesanías y discusiones comunitarias durante todo el día. Consulta la sección Programa para más detalles.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        <span>¿Puedo llevar a mi familia y niñes?</span>
+        <span class="faq-icon" aria-hidden="true"></span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          <p>¡Claro! El festival está pensado para disfrutarse en familia, con actividades para todas las edades.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        <span>¿Cómo puedo apoyar o ser voluntario?</span>
+        <span class="faq-icon" aria-hidden="true"></span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          <p>Puedes apoyar con una donación a través de la sección "Apoya el Festival" más abajo, o escribiendo a los organizadores si quieres ser parte del equipo de voluntaries.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="auspiciadores" id="auspiciadores">
+  <div class="section-head">
+    <h2>Auspiciadores</h2>
+  </div>
+  <div class="sponsor-grid">
+    <a href="https://www.bacardi.com" target="_blank" rel="noopener noreferrer">
+      <img src="logos/bacardi.svg" alt="Bacardi" width="140" height="52">
+    </a>
+    <a href="https://www.goya.com" target="_blank" rel="noopener noreferrer">
+      <img src="logos/goya.svg" alt="Goya" width="140" height="52">
+    </a>
+    <a href="https://www.claro.com.pr" target="_blank" rel="noopener noreferrer">
+      <img src="logos/claro.svg" alt="Claro" width="140" height="52">
+    </a>
+    <a href="https://www.libertypr.com" target="_blank" rel="noopener noreferrer">
+      <img src="logos/liberty.svg" alt="Liberty" width="140" height="52">
+    </a>
+    <a href="https://www.popular.com" target="_blank" rel="noopener noreferrer">
+      <img src="logos/banco-popular.svg" alt="Banco Popular" width="140" height="52">
+    </a>
+    <a href="https://www.cocacola.com" target="_blank" rel="noopener noreferrer">
+      <img src="logos/coca-cola.svg" alt="Coca-Cola" width="140" height="52">
+    </a>
+  </div>
+</section>
+
+<section class="apoya dots dots-red" id="apoya">
+  <div class="apoya-inner">
+    <span class="festival-script">Apoya el Festival</span>
+    <h2>Cada<br>donación<br>ayuda</h2>
+    <p>Con tu aportación, le damos vida al festival el 24 de septiembre.</p>
+    <a class="btn" href="#">Donar ahora</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-mark">
+      <span>Festival Mariana Bracetti</span>
+    </div>
+    <p>Organizado por La Serigráfica, Comunidad Blondet y Democracia Socialista.</p>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const btn = item.querySelector('.faq-q');
+    btn.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(open => {
+        if (open !== item){
+          open.classList.remove('open');
+          open.querySelector('.faq-q').setAttribute('aria-expanded','false');
+        }
+      });
+      item.classList.toggle('open', !isOpen);
+      btn.setAttribute('aria-expanded', String(!isOpen));
+    });
+  });
+</script>
+</body>
+</html>

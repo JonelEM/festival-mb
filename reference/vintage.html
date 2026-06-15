@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Festival Mariana Bracetti</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bevan&family=Bitter:ital,wght@0,400;0,600;1,500&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2E7CE;
+    --paper-dark:#E9DAB8;
+    --ink:#2E2620;
+    --blue:#5C8AA0;
+    --red:#B6432E;
+    --blue-tint:#D1DFD9;
+    --red-tint:#E7D2BE;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Crimson Text',serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    position:relative;
+  }
+
+  /* ===== Paper grain overlay (whole page) ===== */
+  body::before{
+    content:'';
+    position:fixed; inset:0;
+    z-index:200;
+    pointer-events:none;
+    opacity:.22;
+    mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:180px 180px;
+  }
+  /* faint vignette to age the edges */
+  body::after{
+    content:'';
+    position:fixed; inset:0;
+    z-index:199;
+    pointer-events:none;
+    background:radial-gradient(ellipse at center, transparent 55%, rgba(46,38,32,.16) 100%);
+  }
+
+  /* ===== Halftone dot texture ===== */
+  .dots{position:relative; overflow:hidden;}
+  .dots::after{
+    content:'';
+    position:absolute; inset:0;
+    background-image:radial-gradient(circle, var(--ink) 1.6px, transparent 1.6px);
+    background-size:13px 13px;
+    opacity:.12;
+    mix-blend-mode:multiply;
+    pointer-events:none;
+  }
+  .dots-cream::after{
+    background-image:radial-gradient(circle, var(--blue) 1.6px, transparent 1.6px);
+    opacity:.22;
+    mix-blend-mode:normal;
+  }
+  .dots-red::after{
+    background-image:radial-gradient(circle, var(--paper) 1.8px, transparent 1.8px);
+    opacity:.3;
+    mix-blend-mode:normal;
+  }
+
+  /* ===== Header ===== */
+  header{
+    border-bottom:3px double var(--ink);
+    background:var(--paper);
+    position:sticky; top:0; z-index:50;
+  }
+  .header-inner{
+    max-width:1180px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px;
+  }
+  .wordmark{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Oswald',sans-serif;
+    font-weight:600;
+    letter-spacing:.14em;
+    font-size:14px;
+    text-transform:uppercase;
+  }
+  .wordmark .divider{width:3px;height:16px;background:var(--red);display:inline-block;}
+  nav{display:flex; gap:24px; font-family:'Oswald',sans-serif; font-weight:500; font-size:13px; letter-spacing:.1em; text-transform:uppercase;}
+  nav a{color:var(--ink); text-decoration:none; border-bottom:2px solid transparent; padding-bottom:4px; transition:border-color .15s;}
+  nav a:hover, nav a:focus-visible{border-color:var(--red);}
+
+  /* ===== Hero ===== */
+  .hero{
+    position:relative;
+    background:var(--blue);
+    border-bottom:3px double var(--ink);
+    overflow:hidden;
+  }
+  .hero-inner{
+    max-width:1180px; margin:0 auto;
+    padding:64px 24px 96px;
+    position:relative; z-index:2;
+  }
+  .ribbon{
+    display:inline-block;
+    font-family:'Oswald',sans-serif;
+    font-weight:600; font-size:13px; letter-spacing:.2em; text-transform:uppercase;
+    background:var(--ink); color:var(--paper);
+    padding:10px 28px;
+    clip-path:polygon(14px 0, 100% 0, calc(100% - 14px) 50%, 100% 100%, 14px 100%, 0 50%);
+    transform:rotate(-1.5deg);
+    margin-bottom:30px;
+  }
+  .hero h1{
+    font-family:'Bevan',serif;
+    text-transform:uppercase;
+    font-size:clamp(54px, 11vw, 122px);
+    line-height:.96;
+    letter-spacing:.01em;
+    color:var(--paper);
+    text-shadow:
+      4px 4px 0 rgba(182,67,46,.55),
+      -3px -3px 0 rgba(46,38,32,.35);
+  }
+  .hero .festival-script{
+    font-family:'Bitter',serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(26px,5vw,40px);
+    color:var(--ink);
+    display:block;
+    margin-bottom:6px;
+  }
+  .hero-meta{
+    margin-top:34px;
+    display:flex; flex-wrap:wrap; gap:22px; align-items:center;
+  }
+  .seal{
+    position:relative;
+    display:inline-flex; align-items:center; justify-content:center;
+    width:112px; height:112px;
+    border-radius:50%;
+    text-align:center;
+    font-family:'Oswald',sans-serif;
+    font-weight:600; text-transform:uppercase; letter-spacing:.08em;
+    font-size:10px; line-height:1.28;
+    color:var(--ink);
+    background:var(--paper);
+    transform:rotate(-9deg);
+    padding:10px;
+    border:2px solid var(--ink);
+    box-shadow:
+      0 0 0 4px var(--paper),
+      3px 5px 0 rgba(46,38,32,.45),
+      7px 12px 16px rgba(46,38,32,.2);
+    isolation:isolate;
+  }
+  .seal::before{
+    content:'';
+    position:absolute; inset:7px;
+    border:1.5px dashed rgba(46,38,32,.45);
+    border-radius:50%;
+    pointer-events:none;
+  }
+  .seal::after{
+    content:'';
+    position:absolute; inset:0;
+    border-radius:50%;
+    background-image:radial-gradient(circle, var(--ink) 1px, transparent 1px);
+    background-size:5px 5px;
+    opacity:.07;
+    mix-blend-mode:multiply;
+    pointer-events:none;
+  }
+  .seal > span{position:relative; z-index:1;}
+  .seal.red{
+    color:var(--red);
+    border-color:var(--red);
+    transform:rotate(8deg);
+    box-shadow:
+      0 0 0 4px var(--paper),
+      3px 5px 0 rgba(182,67,46,.55),
+      7px 12px 16px rgba(182,67,46,.18);
+  }
+  .seal.red::before{
+    border-color:rgba(182,67,46,.55);
+    border-style:solid;
+  }
+  .seal.red span{
+    display:block;
+    opacity:.88;
+  }
+
+  /* halftone star */
+  .star-burst{
+    position:absolute;
+    right:-50px; top:-30px;
+    width:380px; height:380px;
+    opacity:.55;
+    z-index:1;
+    pointer-events:none;
+  }
+  .star-burst svg{width:100%; height:100%;}
+
+  /* ===== Intro ===== */
+  .intro{
+    max-width:760px; margin:0 auto;
+    padding:76px 24px;
+    text-align:center;
+  }
+  .intro .kicker{
+    font-family:'Oswald',sans-serif;
+    font-weight:600;
+    text-transform:uppercase;
+    font-size:13px; letter-spacing:.28em;
+    color:var(--red);
+    margin-bottom:20px;
+  }
+  .intro p{
+    font-size:clamp(19px,2.4vw,24px);
+    line-height:1.7;
+    color:#3c322a;
+  }
+  .intro p strong{font-weight:600; color:var(--ink);}
+
+  /* ===== Programa ===== */
+  .programa{
+    max-width:1180px; margin:0 auto;
+    padding:24px 24px 90px;
+  }
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    gap:16px;
+    border-bottom:3px double var(--ink);
+    padding-bottom:16px;
+    margin-bottom:40px;
+    flex-wrap:wrap;
+  }
+  .section-head h2{
+    font-family:'Bevan',serif;
+    text-transform:uppercase;
+    font-size:clamp(32px,5vw,52px);
+    letter-spacing:.01em;
+  }
+  .section-head .date{
+    font-family:'Oswald',sans-serif;
+    font-weight:600; font-size:13px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--ink);
+    white-space:nowrap;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:30px;
+  }
+  .panel{
+    border:1px solid var(--ink);
+    outline:1px solid var(--ink);
+    outline-offset:6px;
+    background:var(--paper);
+    padding:30px;
+    position:relative;
+    box-shadow:5px 5px 0 rgba(46,38,32,.4);
+    transition:transform .15s, box-shadow .15s;
+  }
+  .panel:hover{transform:translate(-3px,-3px); box-shadow:8px 8px 0 rgba(46,38,32,.4);}
+  .panel.blue{background:var(--blue-tint);}
+  .panel.red{background:var(--red-tint);}
+  .panel .tag{
+    display:inline-block;
+    font-family:'Oswald',sans-serif;
+    font-weight:600; font-size:11px; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--red);
+    margin-bottom:14px;
+  }
+  .panel h3{
+    font-family:'Bevan',serif;
+    text-transform:uppercase;
+    font-size:clamp(22px,3vw,30px);
+    line-height:1.15;
+    margin-bottom:12px;
+  }
+  .panel p{font-size:16px; color:#3c322a;}
+
+  /* ===== FAQ Accordion ===== */
+  .faq{
+    max-width:840px; margin:0 auto;
+    padding:24px 24px 48px;
+  }
+  .faq-list{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .faq-item{
+    border:1px solid var(--ink);
+    outline:1px solid var(--ink);
+    outline-offset:6px;
+    background:var(--paper);
+    box-shadow:5px 5px 0 rgba(46,38,32,.4);
+    transition:transform .15s, box-shadow .15s;
+  }
+  .faq-item:nth-child(even){background:var(--blue-tint);}
+  .faq-item:hover{transform:translate(-3px,-3px); box-shadow:8px 8px 0 rgba(46,38,32,.4);}
+  .faq-q{
+    width:100%;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:18px;
+    padding:20px 24px;
+    background:none; border:none;
+    font-family:'Oswald',sans-serif;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    font-size:clamp(14px,2.2vw,18px);
+    text-align:left;
+    color:var(--ink);
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .faq-q:focus-visible{outline:3px solid var(--red); outline-offset:-3px;}
+  .faq-icon{
+    flex-shrink:0;
+    width:34px; height:34px;
+    border:2px solid var(--ink);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+    background:var(--red);
+    transition:transform .25s ease, background .25s ease;
+  }
+  .faq-icon::before, .faq-icon::after{
+    content:'';
+    position:absolute;
+    background:var(--paper);
+  }
+  .faq-icon::before{width:14px; height:2px;}
+  .faq-icon::after{width:2px; height:14px;}
+  .faq-item.open .faq-icon{transform:rotate(45deg); background:var(--blue);}
+
+  .faq-a{
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows .3s ease;
+  }
+  .faq-item.open .faq-a{grid-template-rows:1fr;}
+  .faq-a-inner{overflow:hidden; min-height:0;}
+  .faq-a-inner p{
+    font-size:16px;
+    color:#3c322a;
+    border-top:2px dashed var(--ink);
+    margin:0 24px;
+    padding:18px 0 22px;
+  }
+
+  /* ===== Auspiciadores ===== */
+  .auspiciadores{
+    max-width:1180px; margin:0 auto;
+    padding:0 24px 90px;
+  }
+  .sponsor-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:16px;
+    align-items:stretch;
+  }
+  @media (min-width:640px){
+    .sponsor-grid{grid-template-columns:repeat(2,1fr); gap:20px;}
+  }
+  @media (min-width:1024px){
+    .sponsor-grid{grid-template-columns:repeat(3,1fr); gap:24px;}
+  }
+  .sponsor-grid a{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid var(--ink);
+    outline:1px solid var(--ink);
+    outline-offset:6px;
+    background:var(--paper);
+    padding:28px 24px;
+    min-height:112px;
+    box-shadow:5px 5px 0 rgba(46,38,32,.4);
+    transition:transform .15s, box-shadow .15s;
+  }
+  .sponsor-grid a:hover,
+  .sponsor-grid a:focus-visible{
+    transform:translate(-3px,-3px);
+    box-shadow:8px 8px 0 rgba(46,38,32,.4);
+  }
+  .sponsor-grid img{
+    max-width:140px;
+    max-height:52px;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    filter:grayscale(100%) sepia(.25);
+    opacity:.82;
+    transition:filter .15s, opacity .15s;
+  }
+  .sponsor-grid a:hover img,
+  .sponsor-grid a:focus-visible img{
+    filter:grayscale(0%) sepia(.15);
+    opacity:1;
+  }
+
+  /* ===== Apoya / CTA ===== */
+  .apoya{
+    position:relative;
+    background:var(--red);
+    border-top:3px double var(--ink);
+    border-bottom:3px double var(--ink);
+    text-align:center;
+    padding:88px 24px;
+    overflow:hidden;
+  }
+  .apoya-inner{position:relative; z-index:2; max-width:680px; margin:0 auto;}
+  .apoya .festival-script{
+    font-family:'Bitter',serif; font-style:italic; font-weight:500;
+    font-size:clamp(22px,4vw,30px);
+    color:var(--paper);
+    display:block; margin-bottom:8px;
+  }
+  .apoya h2{
+    font-family:'Bevan',serif;
+    text-transform:uppercase;
+    font-size:clamp(44px,8.5vw,88px);
+    color:var(--paper);
+    line-height:1;
+    margin-bottom:26px;
+    text-shadow:4px 4px 0 rgba(92,138,160,.5);
+  }
+  .apoya p{
+    color:var(--paper);
+    font-size:clamp(16px,2.2vw,19px);
+    margin-bottom:34px;
+  }
+  .btn{
+    display:inline-block;
+    font-family:'Oswald',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.16em;
+    font-weight:600;
+    font-size:16px;
+    background:var(--paper);
+    color:var(--ink);
+    border:1px solid var(--ink);
+    outline:1px solid var(--ink);
+    outline-offset:5px;
+    padding:16px 38px;
+    text-decoration:none;
+    box-shadow:5px 5px 0 rgba(46,38,32,.5);
+    transition:transform .15s, box-shadow .15s;
+  }
+  .btn:hover, .btn:focus-visible{
+    transform:translate(-3px,-3px);
+    box-shadow:8px 8px 0 rgba(46,38,32,.5);
+  }
+
+  /* ===== Footer ===== */
+  footer{
+    background:var(--paper);
+    padding:44px 24px;
+  }
+  .footer-inner{
+    max-width:1180px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:20px; flex-wrap:wrap;
+    border-top:3px double var(--ink);
+    padding-top:26px;
+  }
+  .footer-mark{display:flex; align-items:center; gap:10px;}
+  .footer-mark svg{width:26px; height:26px;}
+  footer p{font-family:'Oswald',sans-serif; font-size:12px; letter-spacing:.08em; color:#6b5d4f;}
+  .footer-mark span{
+    font-family:'Oswald',sans-serif; font-weight:600; text-transform:uppercase; font-size:13px; letter-spacing:.12em;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width:760px){
+    nav{display:none;}
+    .grid{grid-template-columns:1fr;}
+    .star-burst{width:240px; height:240px; right:-80px; top:-20px; opacity:.4;}
+    .hero-inner{padding:48px 20px 72px;}
+  }
+
+  /* ===== Reduced motion ===== */
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="wordmark">
+      Junta comunitaria de Río Piedras <span class="divider"></span> Comunidad Blondet
+    </div>
+    <nav>
+      <a href="#programa">Programa</a>
+      <a href="#faq">Preguntas</a>
+      <a href="#auspiciadores">Auspiciadores</a>
+      <a href="#apoya">Apoya el festival</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero dots">
+  <!-- halftone star, built from a dot pattern clipped to a star -->
+  <div class="star-burst" aria-hidden="true">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="halftoneStar" width="11" height="11" patternUnits="userSpaceOnUse">
+          <circle cx="5.5" cy="5.5" r="2.8" fill="#F2E7CE"/>
+        </pattern>
+        <clipPath id="starClip">
+          <path d="M100 8 L122 72 L190 72 L135 112 L156 178 L100 138 L44 178 L65 112 L10 72 L78 72 Z"/>
+        </clipPath>
+      </defs>
+      <g clip-path="url(#starClip)">
+        <rect width="200" height="200" fill="url(#halftoneStar)"/>
+      </g>
+      <path d="M100 8 L122 72 L190 72 L135 112 L156 178 L100 138 L44 178 L65 112 L10 72 L78 72 Z"
+            fill="none" stroke="#F2E7CE" stroke-width="1.5" opacity="0.45"/>
+    </svg>
+  </div>
+
+  <div class="hero-inner">
+    <span class="ribbon">24 de septiembre &middot; Rio Piedras, PR</span>
+    <span class="festival-script">Aprende y celebra en el Festival</span>
+    <h1>
+      Mariana<br>
+      Bracetti
+    </h1>
+    <div class="hero-meta">
+      <span class="seal"><span>Entrada<br>libre</span></span>
+      <span class="seal red"><span>Todas<br>las edades</span></span>
+    </div>
+  </div>
+</section>
+
+<section class="intro dots dots-cream">
+  <span class="kicker">La bandera que cosió</span>
+  <p>
+    En 1868, Mariana Bracetti cosió la bandera revolucionaria de Lares: una cruz blanca sobre
+    azul y rojo, con una estrella solitaria. Hoy, ese mismo gesto &mdash; coser comunidad, hilo
+    a hilo &mdash; es lo que el festival celebra. <strong>Un día de talleres, juegos y memoria
+    colectiva</strong>, abierto a todo el barrio.
+  </p>
+</section>
+
+<section class="programa" id="programa">
+  <div class="section-head">
+    <h2>Programa del día</h2>
+    <span class="date">24 de septiembre</span>
+  </div>
+  <div class="grid">
+    <div class="panel blue">
+      <span class="tag">Música</span>
+      <h3>Música en vivo</h3>
+      <p>Artistas locales en escena durante todo el festival.</p>
+    </div>
+    <div class="panel blue">
+      <span class="tag">Comida</span>
+      <h3>Comida</h3>
+      <p>Sabores del barrio y cocina comunitaria para compartir en familia.</p>
+    </div>
+    <div class="panel red">
+      <span class="tag">Artesanías</span>
+      <h3>Artesanías</h3>
+      <p>Trabajo manual y creaciones de artesanes y artesanas del territorio.</p>
+    </div>
+    <div class="panel red">
+      <span class="tag">Diálogo</span>
+      <h3>Discusiones comunitarias</h3>
+      <p>Conversaciones abiertas sobre el barrio, su historia y su futuro.</p>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="section-head">
+    <h2>Preguntas frecuentes</h2>
+    <span class="date">Todo lo que debes saber</span>
+  </div>
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        <span>¿Cuándo y dónde es el festival?</span>
+        <span class="faq-icon" aria-hidden="true"></span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          <p>El Festival Mariana Bracetti se celebra el 24 de septiembre en Río Piedras, Puerto Rico.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        <span>¿Cómo llego al festival?</span>
+        <span class="faq-icon" aria-hidden="true"></span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          <p>El festival tomará lugar en la comunidad Blondet, en las calles Balseiro y Añasco, desde El Refugio hasta Malayo Bar. Recomendamos llegar por el tren urbano en la parada Universidad.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        <span>¿La entrada tiene costo?</span>
+        <span class="faq-icon" aria-hidden="true"></span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          <p>No, la entrada es completamente libre y todas las actividades están abiertas para todas las edades. Habrá vendedores de comida y artistas vendiendo sus creaciones, así que te recomendamos traer efectivo para apoyarlos.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        <span>¿Qué actividades habrá?</span>
+        <span class="faq-icon" aria-hidden="true"></span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          <p>Habrá música en vivo, comida, artesanías y discusiones comunitarias durante todo el día. Consulta la sección Programa para más detalles.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        <span>¿Puedo llevar a mi familia y niñes?</span>
+        <span class="faq-icon" aria-hidden="true"></span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          <p>¡Claro! El festival está pensado para disfrutarse en familia, con actividades para todas las edades.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        <span>¿Cómo puedo apoyar o ser voluntario?</span>
+        <span class="faq-icon" aria-hidden="true"></span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          <p>Puedes apoyar con una donación a través de la sección "Apoya el Festival" más abajo, o escribiendo a los organizadores si quieres ser parte del equipo de voluntaries.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="auspiciadores" id="auspiciadores">
+  <div class="section-head">
+    <h2>Auspiciadores</h2>
+  </div>
+  <div class="sponsor-grid">
+    <a href="https://www.bacardi.com" target="_blank" rel="noopener noreferrer">
+      <img src="logos/bacardi.svg" alt="Bacardi" width="140" height="52">
+    </a>
+    <a href="https://www.goya.com" target="_blank" rel="noopener noreferrer">
+      <img src="logos/goya.svg" alt="Goya" width="140" height="52">
+    </a>
+    <a href="https://www.claro.com.pr" target="_blank" rel="noopener noreferrer">
+      <img src="logos/claro.svg" alt="Claro" width="140" height="52">
+    </a>
+    <a href="https://www.libertypr.com" target="_blank" rel="noopener noreferrer">
+      <img src="logos/liberty.svg" alt="Liberty" width="140" height="52">
+    </a>
+    <a href="https://www.popular.com" target="_blank" rel="noopener noreferrer">
+      <img src="logos/banco-popular.svg" alt="Banco Popular" width="140" height="52">
+    </a>
+    <a href="https://www.cocacola.com" target="_blank" rel="noopener noreferrer">
+      <img src="logos/coca-cola.svg" alt="Coca-Cola" width="140" height="52">
+    </a>
+  </div>
+</section>
+
+<section class="apoya dots dots-red" id="apoya">
+  <div class="apoya-inner">
+    <span class="festival-script">Apoya el Festival</span>
+    <h2>Cada<br>donación<br>ayuda</h2>
+    <p>Con tu aportación, le damos vida al festival el 24 de septiembre.</p>
+    <a class="btn" href="#">Donar ahora</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-mark">
+      <span>Festival Mariana Bracetti</span>
+    </div>
+    <p>Organizado por La Serigráfica, Comunidad Blondet y Democracia Socialista.</p>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const btn = item.querySelector('.faq-q');
+    btn.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(open => {
+        if (open !== item){
+          open.classList.remove('open');
+          open.querySelector('.faq-q').setAttribute('aria-expanded','false');
+        }
+      });
+      item.classList.toggle('open', !isOpen);
+      btn.setAttribute('aria-expanded', String(!isOpen));
+    });
+  });
+</script>
+</body>
+</html>

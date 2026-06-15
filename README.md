@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Festival Mariana Bracetti
 
-## Getting Started
+Next.js site for the Festival Mariana Bracetti in Comunidad Blondet, Río Piedras, PR.
 
-First, run the development server:
+## Stack
+
+- [Next.js 16](https://nextjs.org) (App Router, static export)
+- React 19
+- TypeScript
+- Tailwind CSS v4
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) for the bright theme, or [http://localhost:3000/vintage](http://localhost:3000/vintage) for the vintage theme.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Static export
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project is configured for static export — no Node server required in production.
 
-## Learn More
+```bash
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+This generates an `out/` folder with plain HTML, CSS, and JS:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+out/
+  index.html      → /
+  vintage.html      → /vintage
+  _next/            → bundled assets
+  logos/            → public assets
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Preview the static build locally:
 
-## Deploy on Vercel
+```bash
+npx serve out
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploy
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Upload the contents of `out/` to any static host:
+
+- [Netlify](https://www.netlify.com) — drag-and-drop the `out/` folder, or connect the repo and set build command to `npm run build` and publish directory to `out`
+- [Cloudflare Pages](https://pages.cloudflare.com) — build command `npm run build`, output directory `out`
+- [GitHub Pages](https://pages.github.com) — upload `out/` or use a GitHub Action
+- [Vercel](https://vercel.com) — detects Next.js static export automatically
+
+## Project structure
+
+```
+src/
+  app/
+    (bright)/      # Bright theme at /
+    vintage/       # Vintage theme at /vintage
+  components/
+  lib/             # Shared page content
+  styles/          # Theme stylesheets
+public/
+  logos/
+reference/         # Original HTML mockups
+```
+
+## Scripts
+
+- `npm run dev` — start development server
+- `npm run build` — static export to `out/`
+- `npm run lint` — run ESLint
+
+## Reference designs
+
+Static HTML mockups live in `reference/`:
+
+- `bright.html` — modern bright theme (matches `/`)
+- `vintage.html` — vintage paper theme (matches `/vintage`)
