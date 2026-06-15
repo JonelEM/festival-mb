@@ -115,7 +115,9 @@ If your repo is named `YOUR_USER.github.io` (a user site), the bright theme is a
 
 ### Project sites and asset paths
 
-GitHub Pages serves project repos from a subpath (`/festival-mb/`). If CSS or JS 404 after deploy, set `basePath` in `next.config.ts` to match your repo name and pass `GITHUB_PAGES=true` in the workflow build step. Say the word if you want that wired up.
+GitHub Pages serves this repo at `https://JonelEM.github.io/festival-mb/` (note the `/festival-mb/` prefix). The build sets `GITHUB_PAGES=true` in the workflow so Next.js uses `basePath: /festival-mb` for CSS, JS, and fonts.
+
+Local builds omit the prefix — run `GITHUB_PAGES=true npm run build` to match production output.
 
 ### Other hosts
 

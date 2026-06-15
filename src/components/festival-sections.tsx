@@ -1,4 +1,5 @@
 import { FaqSection } from "@/components/faq-section";
+import { withBasePath } from "@/lib/base-path";
 import { introCopy, programaPanels, sponsors } from "@/lib/festival-content";
 
 export function FestivalSections() {
@@ -43,7 +44,7 @@ export function FestivalSections() {
               rel="noopener noreferrer"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={sponsor.src} alt={sponsor.name} width={140} height={52} />
+              <img src={withBasePath(sponsor.src)} alt={sponsor.name} width={140} height={52} />
             </a>
           ))}
         </div>
