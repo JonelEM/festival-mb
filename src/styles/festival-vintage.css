@@ -260,6 +260,29 @@
   opacity: 0.88;
 }
 
+.theme-vintage .stamp {
+  display: inline-block;
+  border: 3px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-oswald), "Oswald", sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 14px;
+  padding: 10px 18px;
+  transform: rotate(2deg);
+  box-shadow: 5px 5px 0 rgba(46, 38, 32, 0.45);
+}
+
+.theme-vintage .stamp.red {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--ink);
+  transform: rotate(-2deg);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
 .theme-vintage .star-burst {
   position: absolute;
   right: -50px;

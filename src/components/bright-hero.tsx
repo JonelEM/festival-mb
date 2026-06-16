@@ -1,3 +1,6 @@
+import { HeroBadges } from "@/components/hero-badges";
+import { HeroTitle } from "@/components/hero-title";
+
 export function BrightHero() {
   return (
     <section className="hero dots">
@@ -26,29 +29,10 @@ export function BrightHero() {
 
       <div className="hero-inner">
         <span className="eyebrow">24 de septiembre · Rio Piedras, PR</span>
-        <span className="festival-script">Aprende y celebra en el Festival</span>
-        <h1>
-          Mariana
-          <br />
-          <span className="accent" data-text="Bracetti">
-            Bracetti
-          </span>
-        </h1>
+        <span className="festival-script">Te invitamos a celebrar</span>
+        <HeroTitle />
         <div className="hero-meta">
-          <span className="seal">
-            <span>
-              Entrada
-              <br />
-              libre
-            </span>
-          </span>
-          <span className="seal red">
-            <span>
-              Todas
-              <br />
-              las edades
-            </span>
-          </span>
+          <HeroBadges />
         </div>
       </div>
     </section>

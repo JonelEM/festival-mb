@@ -10,7 +10,7 @@ export function SiteHeader() {
     <header>
       <div className="header-inner">
         <div className="wordmark">
-          Junta comunitaria de Río Piedras <span className="divider" /> Comunidad Blondet
+          Junta comunitaria de Río Piedras
         </div>
         <nav>
           {navLinks.map((link) => (

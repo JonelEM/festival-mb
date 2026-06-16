@@ -72,7 +72,7 @@ export function FestivalSections() {
           <div className="footer-mark">
             <span>Festival Mariana Bracetti</span>
           </div>
-          <p>Organizado por La Serigráfica, Comunidad Blondet y Democracia Socialista.</p>
+          <p>Organizado por La Comunidad Blondet</p>
         </div>
       </footer>
     </>

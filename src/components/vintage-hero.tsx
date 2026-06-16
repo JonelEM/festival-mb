@@ -1,3 +1,5 @@
+import { HeroBadges } from "@/components/hero-badges";
+
 export function VintageHero() {
   return (
     <section className="hero dots">
@@ -33,20 +35,7 @@ export function VintageHero() {
           Bracetti
         </h1>
         <div className="hero-meta">
-          <span className="seal">
-            <span>
-              Entrada
-              <br />
-              libre
-            </span>
-          </span>
-          <span className="seal red">
-            <span>
-              Todas
-              <br />
-              las edades
-            </span>
-          </span>
+          <HeroBadges />
         </div>
       </div>
     </section>
