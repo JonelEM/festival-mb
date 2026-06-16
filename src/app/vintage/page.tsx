@@ -6,8 +6,10 @@ export default function VintagePage() {
   return (
     <>
       <SiteHeader />
-      <VintageHero />
-      <FestivalSections />
+      <main>
+        <VintageHero />
+        <FestivalSections />
+      </main>
     </>
   );
 }

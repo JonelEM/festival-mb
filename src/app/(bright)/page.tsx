@@ -6,8 +6,10 @@ export default function Home() {
   return (
     <>
       <SiteHeader />
-      <BrightHero />
-      <FestivalSections />
+      <main>
+        <BrightHero />
+        <FestivalSections />
+      </main>
     </>
   );
 }
