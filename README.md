@@ -16,7 +16,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) for the bright theme, or [http://localhost:3000/vintage](http://localhost:3000/vintage) for the vintage theme.
+Open [http://localhost:3000](http://localhost:3000) for the bright theme, [http://localhost:3000/vintage](http://localhost:3000/vintage) for the vintage theme, or [http://localhost:3000/divedco](http://localhost:3000/divedco) for the DIVEDCO poster theme.
 
 ## Static export
 
@@ -31,7 +31,8 @@ This generates an `out/` folder with plain HTML, CSS, and JS:
 ```
 out/
   index.html      → /
-  vintage.html      → /vintage
+  vintage.html    → /vintage
+  divedco.html    → /divedco
   _next/            → bundled assets
   logos/            → public assets
 ```
@@ -110,6 +111,7 @@ For a project repo named `festival-mb`:
 |------|-----|
 | Bright theme | `https://YOUR_USER.github.io/festival-mb/` |
 | Vintage theme | `https://YOUR_USER.github.io/festival-mb/vintage` |
+| DIVEDCO theme | `https://YOUR_USER.github.io/festival-mb/divedco` |
 
 If your repo is named `YOUR_USER.github.io` (a user site), the bright theme is at `https://YOUR_USER.github.io/` instead.
 
@@ -130,6 +132,7 @@ src/
   app/
     (bright)/      # Bright theme at /
     vintage/       # Vintage theme at /vintage
+    divedco/       # DIVEDCO poster theme at /divedco
   components/
   lib/             # Shared page content
   styles/          # Theme stylesheets
@@ -150,3 +153,4 @@ Static HTML mockups live in `reference/`:
 
 - `bright.html` — modern bright theme (matches `/`)
 - `vintage.html` — vintage paper theme (matches `/vintage`)
+- DIVEDCO theme at `/divedco` — mid-century Puerto Rican cartel/serigraphy style
