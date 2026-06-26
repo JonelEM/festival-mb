@@ -25,11 +25,10 @@ jobs:
           cache: npm
 
       - run: npm ci
-      - name: Verify Mapbox token secret
+      - name: Check Mapbox token secret
         run: |
           if [ -z "$NEXT_PUBLIC_MAPBOX_TOKEN" ]; then
-            echo "::error::NEXT_PUBLIC_MAPBOX_TOKEN is not set. Add it under Settings → Secrets → Actions → Repository secrets."
-            exit 1
+            echo "::warning::NEXT_PUBLIC_MAPBOX_TOKEN is not set — the map page will show an error until you add it under Settings → Secrets → Actions → Repository secrets."
           fi
         env:
           NEXT_PUBLIC_MAPBOX_TOKEN: ${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}
