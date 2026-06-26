@@ -314,8 +314,10 @@ export function FestivalMap() {
             <div style={{ fontSize: "48px" }}>🗺️</div>
             <h2>Mapa no disponible</h2>
             <p>
-              Configura <code>NEXT_PUBLIC_MAPBOX_TOKEN</code> en{" "}
-              <code>.env.local</code> con un token público de Mapbox.
+              Falta el token de Mapbox. En desarrollo, agrégalo a{" "}
+              <code>.env.local</code>. En GitHub Pages, crea el secreto{" "}
+              <code>NEXT_PUBLIC_MAPBOX_TOKEN</code> en{" "}
+              <strong>Settings → Secrets → Actions</strong> y vuelve a desplegar.
             </p>
           </div>
         </div>

@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useCallback, useRef, type CSSProperties, type ReactNode } from "react";
 import { addFestivalToCalendar } from "@/lib/add-to-calendar";
-import { withBasePath } from "@/lib/base-path";
 import { HERO_BADGE_STYLE } from "@/lib/hero-badge-style";
 
 type BadgeTilt = CSSProperties & { "--badge-tilt": string };
@@ -88,12 +87,10 @@ function HeroBadgeLink({
 }
 
 export function HeroBadgesInteractive() {
-  const mapHref = withBasePath("/map");
-
   if (HERO_BADGE_STYLE === "stamp") {
     return (
       <>
-        <HeroBadgeLink className="stamp" tilt="2deg" href={mapHref}>
+        <HeroBadgeLink className="stamp" tilt="2deg" href="/map">
           Ver mapa
         </HeroBadgeLink>
         <HeroBadgeButton
@@ -109,7 +106,7 @@ export function HeroBadgesInteractive() {
 
   return (
     <>
-      <HeroBadgeLink className="seal" tilt="-9deg" href={mapHref}>
+      <HeroBadgeLink className="seal" tilt="-9deg" href="/map">
         <span>
           Ver
           <br />

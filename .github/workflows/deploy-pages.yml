@@ -25,6 +25,14 @@ jobs:
           cache: npm
 
       - run: npm ci
+      - name: Verify Mapbox token secret
+        run: |
+          if [ -z "$NEXT_PUBLIC_MAPBOX_TOKEN" ]; then
+            echo "::error::NEXT_PUBLIC_MAPBOX_TOKEN is not set. Add it under Settings → Secrets → Actions → Repository secrets."
+            exit 1
+          fi
+        env:
+          NEXT_PUBLIC_MAPBOX_TOKEN: ${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}
       - run: npm run build
         env:
           GITHUB_PAGES: "true"
