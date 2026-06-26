@@ -36,7 +36,8 @@ export const MARKER_PRESETS = {
   },
   trainStation: {
     icon: "🚆",
-    color: "#1A1A1A",
+    color: "#F7F4ED",
+    border: "#1A1A1A",
     legendLabel: "Estación de tren",
   },
   parking: {

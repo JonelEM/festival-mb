@@ -87,6 +87,13 @@
   z-index: 5;
 }
 
+.theme-bright.festival-map-page .map-search-menu {
+  position: absolute;
+  bottom: 28px;
+  right: 20px;
+  z-index: 5;
+}
+
 .theme-bright.festival-map-page .legend-toggle {
   display: inline-flex;
   align-items: center;
@@ -156,7 +163,58 @@
   flex-shrink: 0;
 }
 
+.theme-bright.festival-map-page .search-panel {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  right: 0;
+  min-width: 240px;
+  background: var(--cream);
+  border: 3px solid var(--ink);
+  padding: 10px;
+  box-shadow: 6px 6px 0 var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.theme-bright.festival-map-page .search-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  font-family: var(--font-anton), "Anton", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: transparent;
+  border: 2px solid transparent;
+  padding: 8px 10px;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    transform 0.15s;
+}
+
+.theme-bright.festival-map-page .search-item:hover,
+.theme-bright.festival-map-page .search-item:focus-visible {
+  background: var(--blue-tint);
+  border-color: var(--ink);
+  transform: translate(-1px, -1px);
+}
+
+.theme-bright.festival-map-page .search-item-icon {
+  width: 22px;
+  text-align: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
 .theme-bright.festival-map-page .mapboxgl-popup-content {
+  position: relative !important;
   background: var(--cream) !important;
   border: 3px solid var(--ink) !important;
   border-radius: 0 !important;
@@ -193,20 +251,64 @@
 }
 
 .theme-bright.festival-map-page .mapboxgl-popup-close-button {
+  position: absolute !important;
+  top: 8px !important;
+  right: 8px !important;
+  width: 24px !important;
+  height: 24px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
   color: var(--ink) !important;
   font-size: 20px !important;
+  line-height: 1 !important;
 }
 
 .theme-bright.festival-map-page .festival-marker {
   cursor: pointer;
+}
+
+.theme-bright.festival-map-page .marker-body {
   display: flex;
   flex-direction: column;
   align-items: center;
   transition: transform 0.15s;
 }
 
-.theme-bright.festival-map-page .festival-marker:hover {
+.theme-bright.festival-map-page .festival-marker:hover .marker-body {
   transform: translate(-2px, -2px) scale(1.05);
+}
+
+.theme-bright.festival-map-page .marker-body.is-wiggling {
+  animation: festival-marker-wiggle 0.55s ease;
+}
+
+@keyframes festival-marker-wiggle {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  15% {
+    transform: translate(-3px, 2px) rotate(-8deg);
+  }
+
+  30% {
+    transform: translate(3px, -2px) rotate(7deg);
+  }
+
+  45% {
+    transform: translate(-2px, -1px) rotate(-5deg);
+  }
+
+  60% {
+    transform: translate(2px, 1px) rotate(4deg);
+  }
+
+  75% {
+    transform: translate(-1px, 1px) rotate(-3deg);
+  }
 }
 
 .theme-bright.festival-map-page .marker-bubble {
@@ -366,7 +468,11 @@
   .theme-bright.festival-map-page .map-legend-menu {
     left: 12px;
     bottom: 12px;
-    right: auto;
+  }
+
+  .theme-bright.festival-map-page .map-search-menu {
+    right: 12px;
+    bottom: 12px;
   }
 
   .theme-bright.festival-map-page .legend-panel {
@@ -375,14 +481,19 @@
     min-width: min(220px, calc(100vw - 24px));
   }
 
-  .theme-bright.festival-map-page .map-controls {
-    top: 12px;
-    right: 12px;
+  .theme-bright.festival-map-page .search-panel {
+    right: 0;
+    left: auto;
+    min-width: min(240px, calc(100vw - 24px));
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .theme-bright.festival-map-page .spinner {
+    animation: none;
+  }
+
+  .theme-bright.festival-map-page .marker-body.is-wiggling {
     animation: none;
   }
 }

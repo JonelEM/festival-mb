@@ -3,26 +3,27 @@ import {
   getFestivalIcsContent,
 } from "@/lib/festival-event";
 
-function isAndroid(): boolean {
-  return /Android/i.test(navigator.userAgent);
+function isIOS(): boolean {
+  return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
+/** Best add-to-calendar URL for the current device (labnol-style deep links). */
+export function getFestivalCalendarUrl(): string {
+  if (isIOS()) {
+    // Opens Apple Calendar's add-event sheet without a file download.
+    return `data:text/calendar;charset=utf-8,${encodeURIComponent(getFestivalIcsContent())}`;
+  }
+
+  return getFestivalGoogleCalendarUrl();
 }
 
 export function addFestivalToCalendar(): void {
-  if (isAndroid()) {
-    window.open(getFestivalGoogleCalendarUrl(), "_blank", "noopener,noreferrer");
+  const url = getFestivalCalendarUrl();
+
+  if (url.startsWith("data:")) {
+    window.location.assign(url);
     return;
   }
 
-  const blob = new Blob([getFestivalIcsContent()], {
-    type: "text/calendar;charset=utf-8",
-  });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "festival-mariana-bracetti.ics";
-  link.rel = "noopener";
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  URL.revokeObjectURL(url);
+  window.open(url, "_blank", "noopener,noreferrer");
 }
