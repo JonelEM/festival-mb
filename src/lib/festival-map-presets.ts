@@ -30,7 +30,7 @@ export const MARKER_PRESETS = {
     legendLabel: "Ropa",
   },
   musicStage: {
-    icon: "🎸",
+    icon: "🎤",
     color: "#ED1C24",
     legendLabel: "Escenarios",
   },

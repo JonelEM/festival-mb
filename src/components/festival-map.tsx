@@ -435,7 +435,7 @@ export function FestivalMap() {
                   onClick={() => handleSearchAction(flyToMusicStage1, "music-stage-1")}
                 >
                   <span className="search-item-icon" aria-hidden="true">
-                    🎸
+                    🎤
                   </span>
                   Escenario 1
                 </button>
@@ -445,7 +445,7 @@ export function FestivalMap() {
                   onClick={() => handleSearchAction(flyToMusicStage2, "music-stage-2")}
                 >
                   <span className="search-item-icon" aria-hidden="true">
-                    🎸
+                    🎤
                   </span>
                   Escenario 2
                 </button>

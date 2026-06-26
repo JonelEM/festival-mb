@@ -64,7 +64,7 @@ export const FESTIVAL_MARKERS: FestivalMarker[] = [
     preset: "bar",
     label: "El Refugio",
     title: "El Refugio",
-    desc: "Bar en la calle Balseiro — inicio del recorrido del festival.",
+    desc: "Bar en la calle Balseiro, cerca del escenario 1.",
   },
   {
     id: "malayo-bar",
@@ -72,7 +72,7 @@ export const FESTIVAL_MARKERS: FestivalMarker[] = [
     preset: "bar",
     label: "Malayo Bar",
     title: "Malayo Bar",
-    desc: "Bar de referencia en el corazón del recinto.",
+    desc: "Bar de en Calle Añasco,cerca del escenario 2.",
   },
   {
     id: "dipea",
