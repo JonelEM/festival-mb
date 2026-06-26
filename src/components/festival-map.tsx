@@ -40,7 +40,7 @@ export function FestivalMap() {
   const rotationFrameRef = useRef<number | null>(null);
   const rotatingRef = useRef(true);
 
-  const [loading, setLoading] = useState(HAS_VALID_TOKEN);
+  const [loading, setLoading] = useState(false);
   const [configError, setConfigError] = useState(!HAS_VALID_TOKEN);
   const [legendOpen, setLegendOpen] = useState(false);
   const legendMenuRef = useRef<HTMLDivElement>(null);
