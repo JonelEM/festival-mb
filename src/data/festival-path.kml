@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document id="KmlFile">
+	<Placemark id="03B6FF519D4037138F4E">
+		<name>Festival path</name>
+		<LineString>
+			<coordinates>
+				-66.05347881241565,18.40506928958211,0 -66.05458287480006,18.40485548595573,0 -66.05440609816739,18.40445616714044,0 -66.05433152711232,18.40421779620656,0 -66.05412211369264,18.40380253578025,0 -66.05365980400566,18.40318694448071,0
+			</coordinates>
+		</LineString>
+	</Placemark>
+</Document>
+</kml>

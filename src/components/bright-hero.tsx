@@ -1,4 +1,4 @@
-import { HeroBadges } from "@/components/hero-badges";
+import { HeroBadgesInteractive } from "@/components/hero-badges-interactive";
 import { HeroTitle } from "@/components/hero-title";
 
 export function BrightHero() {
@@ -32,7 +32,7 @@ export function BrightHero() {
         <span className="festival-script">Te invitamos a celebrar</span>
         <HeroTitle />
         <div className="hero-meta">
-          <HeroBadges />
+          <HeroBadgesInteractive />
         </div>
       </div>
     </section>

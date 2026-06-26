@@ -28,6 +28,7 @@ jobs:
       - run: npm run build
         env:
           GITHUB_PAGES: "true"
+          NEXT_PUBLIC_MAPBOX_TOKEN: ${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}
 
       - uses: actions/upload-pages-artifact@v3
         with:
