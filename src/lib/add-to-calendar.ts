@@ -7,23 +7,35 @@ function isIOS(): boolean {
   return /iPhone|iPad|iPod/i.test(navigator.userAgent);
 }
 
-/** Best add-to-calendar URL for the current device (labnol-style deep links). */
-export function getFestivalCalendarUrl(): string {
-  if (isIOS()) {
-    // Opens Apple Calendar's add-event sheet without a file download.
-    return `data:text/calendar;charset=utf-8,${encodeURIComponent(getFestivalIcsContent())}`;
-  }
+function isIOSSafari(): boolean {
+  return isIOS() && !/CriOS|FxiOS|EdgiOS/i.test(navigator.userAgent);
+}
 
+/** Google Calendar compose URL (labnol-style deep link). */
+export function getFestivalCalendarUrl(): string {
   return getFestivalGoogleCalendarUrl();
 }
 
-export function addFestivalToCalendar(): void {
-  const url = getFestivalCalendarUrl();
+function openFestivalIcsInAppleCalendar(): void {
+  const ics = getFestivalIcsContent();
+  const dataUrl = `data:text/calendar;charset=utf8,${encodeURIComponent(ics)}`;
 
-  if (url.startsWith("data:")) {
-    window.location.assign(url);
+  // Mobile Safari opens the "Add to Calendar" sheet from a new tab.
+  // location.assign() navigates the page away; download forces a file save.
+  window.open(dataUrl, "_blank", "noopener,noreferrer");
+}
+
+export function addFestivalToCalendar(): void {
+  if (isIOSSafari()) {
+    openFestivalIcsInAppleCalendar();
     return;
   }
 
-  window.open(url, "_blank", "noopener,noreferrer");
+  if (isIOS()) {
+    // Chrome/Firefox on iOS cannot import ICS into Apple Calendar reliably.
+    window.open(getFestivalGoogleCalendarUrl(), "_blank", "noopener,noreferrer");
+    return;
+  }
+
+  window.open(getFestivalCalendarUrl(), "_blank", "noopener,noreferrer");
 }
