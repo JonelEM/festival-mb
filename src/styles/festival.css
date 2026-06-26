@@ -256,6 +256,7 @@ nav a:hover,
   border: 3px solid var(--ink);
   background: var(--cream);
   color: var(--ink);
+  font-family: var(--font-archivo), "Archivo", sans-serif;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -271,6 +272,75 @@ nav a:hover,
   border-color: var(--ink);
   transform: rotate(-2deg);
   box-shadow: 5px 5px 0 var(--ink);
+}
+
+.theme-bright .hero-badge-btn {
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transform: rotate(var(--badge-tilt, 0deg));
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    filter 0.15s ease;
+}
+
+.theme-bright button.hero-badge-btn {
+  margin: 0;
+  appearance: none;
+}
+
+.theme-bright .hero-badge-btn:hover {
+  filter: brightness(1.04);
+  transform: rotate(var(--badge-tilt, 0deg)) translate(-2px, -2px);
+}
+
+.theme-bright .stamp.hero-badge-btn:hover {
+  box-shadow: 7px 7px 0 var(--ink);
+}
+
+.theme-bright .stamp.red.hero-badge-btn:hover {
+  box-shadow: 7px 7px 0 var(--ink);
+}
+
+.theme-bright .seal.hero-badge-btn:hover {
+  transform: rotate(var(--badge-tilt, 0deg)) translate(-1px, -2px) scale(1.03);
+}
+
+.theme-bright .hero-badge-btn:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 4px;
+}
+
+.theme-bright .hero-badge-btn.is-shaking {
+  animation: hero-badge-shake 0.55s ease;
+}
+
+@keyframes hero-badge-shake {
+  0%,
+  100% {
+    transform: rotate(var(--badge-tilt, 0deg)) translate(0, 0);
+  }
+
+  15% {
+    transform: rotate(calc(var(--badge-tilt, 0deg) - 6deg)) translate(-3px, 2px);
+  }
+
+  30% {
+    transform: rotate(calc(var(--badge-tilt, 0deg) + 5deg)) translate(3px, -2px);
+  }
+
+  45% {
+    transform: rotate(calc(var(--badge-tilt, 0deg) - 4deg)) translate(-2px, -1px);
+  }
+
+  60% {
+    transform: rotate(calc(var(--badge-tilt, 0deg) + 3deg)) translate(2px, 1px);
+  }
+
+  75% {
+    transform: rotate(calc(var(--badge-tilt, 0deg) - 2deg)) translate(-1px, 2px);
+  }
 }
 
 /* halftone star */
@@ -738,5 +808,9 @@ nav a:hover,
   .theme-bright * {
     transition: none !important;
     scroll-behavior: auto !important;
+  }
+
+  .theme-bright .hero-badge-btn.is-shaking {
+    animation: none !important;
   }
 }
