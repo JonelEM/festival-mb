@@ -25,11 +25,14 @@ function makeMarkerEl(marker: FestivalMarker) {
 
   const el = document.createElement("div");
   el.className = "festival-marker";
+  el.dataset.markerId = marker.id;
   el.innerHTML = `
-    <div class="marker-bubble marker-bubble--${marker.preset}" style="background:${preset.color};${borderStyle}">
-      <span>${preset.icon}</span>
+    <div class="marker-body">
+      <div class="marker-bubble marker-bubble--${marker.preset}" style="background:${preset.color};${borderStyle}">
+        <span>${preset.icon}</span>
+      </div>
+      <div class="marker-label">${marker.label}</div>
     </div>
-    <div class="marker-label">${marker.label}</div>
   `;
   return el;
 }
@@ -43,7 +46,29 @@ export function FestivalMap() {
   const [loading, setLoading] = useState(false);
   const [configError, setConfigError] = useState(!HAS_VALID_TOKEN);
   const [legendOpen, setLegendOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const legendMenuRef = useRef<HTMLDivElement>(null);
+  const searchMenuRef = useRef<HTMLDivElement>(null);
+  const markerElsRef = useRef<Map<string, HTMLElement>>(new Map());
+
+  const wiggleMarker = useCallback((markerId: string) => {
+    const el = markerElsRef.current.get(markerId);
+    const body = el?.querySelector<HTMLElement>(".marker-body");
+    if (!body || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    body.classList.remove("is-wiggling");
+    void body.offsetWidth;
+    body.classList.add("is-wiggling");
+
+    const onAnimationEnd = () => {
+      body.classList.remove("is-wiggling");
+      body.removeEventListener("animationend", onAnimationEnd);
+    };
+
+    body.addEventListener("animationend", onAnimationEnd);
+  }, []);
 
   const stopRotation = useCallback(() => {
     rotatingRef.current = false;
@@ -53,9 +78,20 @@ export function FestivalMap() {
     }
   }, []);
 
-  const flyToMusicStage = useCallback(() => {
+  const flyToMusicStage1 = useCallback(() => {
     mapRef.current?.flyTo({
       center: MAP_LOCATIONS.musicStage1,
+      zoom: 18,
+      pitch: 60,
+      bearing: 15,
+      duration: 1800,
+      essential: true,
+    });
+  }, []);
+
+  const flyToMusicStage2 = useCallback(() => {
+    mapRef.current?.flyTo({
+      center: MAP_LOCATIONS.musicStage2,
       zoom: 18,
       pitch: 60,
       bearing: 15,
@@ -75,6 +111,17 @@ export function FestivalMap() {
     });
   }, []);
 
+  const flyToParking = useCallback(() => {
+    mapRef.current?.flyTo({
+      center: MAP_LOCATIONS.parking,
+      zoom: 17.5,
+      pitch: 55,
+      bearing: 15,
+      duration: 1800,
+      essential: true,
+    });
+  }, []);
+
   const resetView = useCallback(() => {
     mapRef.current?.flyTo({
       center: FESTIVAL_CENTER,
@@ -85,6 +132,18 @@ export function FestivalMap() {
       essential: true,
     });
   }, []);
+
+  const handleSearchAction = useCallback(
+    (action: () => void, markerId?: string) => {
+      stopRotation();
+      action();
+      setSearchOpen(false);
+      if (markerId) {
+        window.setTimeout(() => wiggleMarker(markerId), 1750);
+      }
+    },
+    [stopRotation, wiggleMarker],
+  );
 
   useEffect(() => {
     if (!HAS_VALID_TOKEN || !mapContainerRef.current || mapRef.current) {
@@ -202,6 +261,7 @@ export function FestivalMap() {
 
       for (const marker of FESTIVAL_MARKERS) {
         const el = makeMarkerEl(marker);
+        markerElsRef.current.set(marker.id, el);
         const preset = MARKER_PRESETS[marker.preset];
         const popup = new mapboxgl.Popup({
           offset: [0, -42],
@@ -258,6 +318,7 @@ export function FestivalMap() {
 
     return () => {
       stopRotation();
+      markerElsRef.current.clear();
       resizeObserver.disconnect();
       window.removeEventListener("resize", onResize);
       map.off("load", onLoad);
@@ -270,22 +331,31 @@ export function FestivalMap() {
   }, [stopRotation]);
 
   useEffect(() => {
-    if (!legendOpen) {
+    if (!legendOpen && !searchOpen) {
       return;
     }
 
     const onPointerDown = (event: PointerEvent) => {
       if (
+        legendOpen &&
         legendMenuRef.current &&
         !legendMenuRef.current.contains(event.target as Node)
       ) {
         setLegendOpen(false);
+      }
+      if (
+        searchOpen &&
+        searchMenuRef.current &&
+        !searchMenuRef.current.contains(event.target as Node)
+      ) {
+        setSearchOpen(false);
       }
     };
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setLegendOpen(false);
+        setSearchOpen(false);
       }
     };
 
@@ -296,7 +366,7 @@ export function FestivalMap() {
       document.removeEventListener("pointerdown", onPointerDown);
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [legendOpen]);
+  }, [legendOpen, searchOpen]);
 
   return (
     <div className="map-shell">
@@ -327,16 +397,80 @@ export function FestivalMap() {
 
       {!configError ? (
         <>
-          <div className="map-controls">
-            <button type="button" className="ctrl-btn" onClick={flyToMusicStage}>
-              🎸 Escenarios
+          <div className="map-search-menu" ref={searchMenuRef}>
+            <button
+              type="button"
+              className="legend-toggle"
+              aria-expanded={searchOpen}
+              aria-haspopup="dialog"
+              aria-controls="map-search-panel"
+              onClick={() => setSearchOpen((open) => !open)}
+            >
+              <span className="legend-toggle-icon" aria-hidden="true">
+                🔍
+              </span>
+              Búsqueda
             </button>
-            <button type="button" className="ctrl-btn" onClick={flyToTrain}>
-              🚆 Estación Universidad
-            </button>
-            <button type="button" className="ctrl-btn" onClick={resetView}>
-              🗺️ Vista completa
-            </button>
+
+            {searchOpen ? (
+              <div
+                id="map-search-panel"
+                className="search-panel"
+                role="dialog"
+                aria-label="Ir a atracciones principales"
+              >
+                <button
+                  type="button"
+                  className="search-item"
+                  onClick={() => handleSearchAction(resetView)}
+                >
+                  <span className="search-item-icon" aria-hidden="true">
+                    🗺️
+                  </span>
+                  Vista Completa
+                </button>
+                <button
+                  type="button"
+                  className="search-item"
+                  onClick={() => handleSearchAction(flyToMusicStage1, "music-stage-1")}
+                >
+                  <span className="search-item-icon" aria-hidden="true">
+                    🎸
+                  </span>
+                  Escenario 1
+                </button>
+                <button
+                  type="button"
+                  className="search-item"
+                  onClick={() => handleSearchAction(flyToMusicStage2, "music-stage-2")}
+                >
+                  <span className="search-item-icon" aria-hidden="true">
+                    🎸
+                  </span>
+                  Escenario 2
+                </button>
+                <button
+                  type="button"
+                  className="search-item"
+                  onClick={() => handleSearchAction(flyToTrain, "train-universidad")}
+                >
+                  <span className="search-item-icon" aria-hidden="true">
+                    🚆
+                  </span>
+                  Estación Universidad
+                </button>
+                <button
+                  type="button"
+                  className="search-item"
+                  onClick={() => handleSearchAction(flyToParking, "parking")}
+                >
+                  <span className="search-item-icon" aria-hidden="true">
+                    🅿️
+                  </span>
+                  Parking
+                </button>
+              </div>
+            ) : null}
           </div>
 
           <div className="map-legend-menu" ref={legendMenuRef}>

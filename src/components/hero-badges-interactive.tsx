@@ -91,14 +91,14 @@ export function HeroBadgesInteractive() {
     return (
       <>
         <HeroBadgeLink className="stamp" tilt="2deg" href="/map">
-          Ver mapa
+          Mapa interactivo
         </HeroBadgeLink>
         <HeroBadgeButton
           className="stamp red"
           tilt="-2deg"
           onActivate={addFestivalToCalendar}
         >
-          Al calendario
+          Guarder en mi calendario
         </HeroBadgeButton>
       </>
     );
