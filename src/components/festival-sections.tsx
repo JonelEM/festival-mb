@@ -1,16 +1,22 @@
 import { FaqSection } from "@/components/faq-section";
+import Link from "next/link";
 import { withBasePath } from "@/lib/base-path";
 import { introCopy, programaPanels, sponsors } from "@/lib/festival-content";
 
 export function FestivalSections() {
   return (
     <>
-      <section className="intro dots dots-cream">
-        <span className="kicker">La bandera que cosió</span>
-        <p>
-          {introCopy}{" "}
-          <strong>Un día de talleres, juegos y memoria colectiva</strong>, abierto a todo el barrio.
-        </p>
+      <section className="intro">
+        <div className="intro-inner">
+          <span className="kicker">La bandera que cosió</span>
+          <p>
+            {introCopy}{" "}
+            <strong>Un día de entretenimiento, aprendizaje, comunidad y memoria colectiva</strong>, abierto a todo el barrio.
+          </p>
+          <Link href="/mariana" className="btn intro-btn">
+            Lee más sobre Mariana
+          </Link>
+        </div>
       </section>
 
       <section className="programa" id="programa">

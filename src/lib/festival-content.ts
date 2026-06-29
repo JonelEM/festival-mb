@@ -15,7 +15,7 @@ export const programaPanels = [
     tone: "red",
     tag: "Artesanías",
     title: "Artesanías",
-    description: "Trabajo manual y creaciones de artesanes y artesanas del territorio.",
+    description: "Trabajo manual y creaciones de artesanes y artesanas locales.",
   },
   {
     tone: "red",
@@ -36,6 +36,30 @@ export const sponsors = [
 
 export const introCopy =
   "En 1868, Mariana Bracetti cosió la bandera revolucionaria de Lares: una cruz blanca sobre azul y rojo, con una estrella solitaria. Hoy, ese mismo gesto — coser comunidad, hilo a hilo — es lo que el festival celebra.";
+
+export const marianaSections = [
+  {
+    title: "Quién fue Mariana Bracetti",
+    paragraphs: [
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    ],
+  },
+  {
+    title: "La bandera que cosió",
+    paragraphs: [
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.",
+      "Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra.",
+    ],
+  },
+  {
+    title: "Por qué la recordamos hoy",
+    paragraphs: [
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam.",
+      "In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa.",
+    ],
+  },
+] as const;
 
 export const faqItems = [
   {
